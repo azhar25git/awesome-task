@@ -13,9 +13,15 @@ if (isset($_POST['url'])) {
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
         $_SESSION['error'] = 'Invalid URL format';
     } else {
-        $shortCode = $db->shortenUrl($url);
-        $newUrl = $_SERVER['HTTP_HOST'] . '/?code=' . $shortCode;
-        $_SESSION['success'] = "Short URL created: <a href='/?code=$shortCode' target='_blank' id='text-to-copy'>$newUrl</a>";
+        if($_POST['formId'] != $_SESSION['formId'] ) {
+            $shortCode = $db->shortenUrl($url);
+            $newUrl = $_SERVER['HTTP_HOST'] . '/?code=' . $shortCode;
+            $_SESSION['success'] = "Short URL created: <a href='/?code=$shortCode' target='_blank' id='text-to-copy'>$newUrl</a>";
+
+            $_SESSION['formId'] = $_POST['formId'];
+        } else {
+            header('Location: ' . $_SERVER['PHP_SELF']);
+        }
     }
 }
 
@@ -63,6 +69,7 @@ if (isset($_GET['code'])) {
     </section>
     <section class="col-10 mx-auto my-4">
         <form method="post">
+            <input type="hidden" name="formId" value = "<?php echo uniqid(); ?>">
             <div class="row">
                 <div class="col-2">
                     <label for="url" class="form-label my-0 py-2"> <strong>Enter a URL to shorten:</strong></label>
@@ -83,6 +90,7 @@ if (isset($_GET['code'])) {
         <table id="url-table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th class="col-6">Original URL</th>
                     <th>Short URL</th>
                     <th>Number of Clicks</th>
@@ -95,6 +103,7 @@ if (isset($_GET['code'])) {
 
                 foreach ($urls as $url) {
                     echo "<tr>";
+                    echo "<td>{$url['id']}</td>";
                     echo "<td>{$url['original_url']}</td>";
                     echo "<td>{$_SERVER['HTTP_HOST']}/?code={$url['short_code']}</td>";
                     echo "<td>{$url['clicks']}</td>";
