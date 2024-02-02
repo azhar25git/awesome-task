@@ -12,3 +12,5 @@ CREATE TABLE clicks (
     ip_address VARCHAR(45),
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE INDEX index_url_id ON clicks (url_id);
