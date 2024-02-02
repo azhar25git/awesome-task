@@ -2,15 +2,23 @@
 
 class Database
 {
+    private static $instance;
 
-    public PDO $db;
-    public $env;
+    public static PDO $db;
+    public static $env;
 
     public function __construct()
     {
-        $this->env = parse_ini_file('.env');
-        // Create database connection
-        $this->db = new PDO("mysql:host={$this->env['DBHOST']};dbname={$this->env['DBNAME']}", $this->env['DBUSER'], $this->env['DBPASS']);
+        // Create/Get database connection instance
+        $this->db = self::getInstance();
+    }
+
+    public static function getInstance(): PDO {
+        if (!self::$instance) {
+            self::$env = parse_ini_file('.env');
+            self::$instance = new PDO("mysql:host=". self::$env['DBHOST'] . ";dbname=" . self::$env['DBNAME'], self::$env['DBUSER'], self::$env['DBPASS']);
+        }
+        return self::$instance;
     }
 
     // Function to create a unique short code
