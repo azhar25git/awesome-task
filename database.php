@@ -68,7 +68,7 @@ class Database
     }
 
     // Function to get a list of shortened URLs with click statistics
-    public function getShortenedUrls(int $offset=0, int $limit=20)
+    public function getShortenedUrls(int $offset=0, int $limit=100)
     {
         $stmt = $this->db->query("
             SELECT campaign_urls.id, campaign_urls.original_url, campaign_urls.short_code, COUNT(*) AS clicks, COUNT(DISTINCT clicks.ip_address) AS unique_clicks
