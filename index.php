@@ -29,8 +29,7 @@ if (isset($_POST['url'])) {
 if (isset($_GET['code'])) {
     $shortCode = $_GET['code'];
     $row = $db->getOriginalUrl($shortCode);
-    var_dump($row);
-    if ($row['id']) {
+    if (isset($row['id'])) {
         $db->logClick($row['id']);
         header('Location: ' . $row['original_url']);
         exit;
