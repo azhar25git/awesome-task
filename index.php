@@ -116,7 +116,7 @@ if (isset($_GET['code'])) {
     </section>
     <footer class="mt-5">
         <div class="row justify-center">
-            <p class="text-center">Copyright &copy; <a href="https://github.com/azhar25git/awesome-task" target="_blank" >Azhar Uddin</a> <?php echo date('Y');?></p>
+            <p class="text-center">Copyright &copy; Azhar <?php echo date('Y');?> | Github repo can be found <a href="https://github.com/azhar25git/awesome-task" target="_blank" >here</a></p>
         </div>
     </footer>
 
