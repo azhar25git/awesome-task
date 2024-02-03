@@ -56,7 +56,7 @@ class Database
     // Function to get the original URL for a short code
     public function getOriginalUrl(string $shortCode)
     {
-        $stmt = $this->db->prepare("SELECT original_url FROM campaign_urls WHERE short_code = ?");
+        $stmt = $this->db->prepare("SELECT id, original_url FROM campaign_urls WHERE short_code = ?");
         $stmt->execute([$shortCode]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -75,7 +75,7 @@ class Database
     public function getShortenedUrls(int $offset=0, int $limit=100)
     {
         $stmt = $this->db->query("
-            SELECT campaign_urls.id, campaign_urls.original_url, campaign_urls.short_code, COUNT(*) AS clicks, COUNT(DISTINCT clicks.ip_address) AS unique_clicks
+            SELECT campaign_urls.original_url, campaign_urls.short_code, COUNT(*) AS clicks, COUNT(DISTINCT clicks.ip_address) AS unique_clicks
             FROM campaign_urls
             JOIN clicks ON campaign_urls.id = clicks.url_id
             GROUP BY campaign_urls.id
