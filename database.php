@@ -75,7 +75,7 @@ class Database
     public function getShortenedUrls(int $offset=0, int $limit=100)
     {
         $stmt = $this->db->query("
-            SELECT campaign_urls.original_url, campaign_urls.short_code, COUNT(*) AS clicks, COUNT(DISTINCT clicks.ip_address) AS unique_clicks
+            SELECT campaign_urls.id, campaign_urls.original_url, campaign_urls.short_code, COUNT(*) AS clicks, COUNT(DISTINCT clicks.ip_address) AS unique_clicks
             FROM campaign_urls
             JOIN clicks ON campaign_urls.id = clicks.url_id
             GROUP BY campaign_urls.id

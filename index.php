@@ -90,6 +90,7 @@ if (isset($_GET['code'])) {
         <table id="url-table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th class="col-6">Original URL</th>
                     <th>Short URL</th>
                     <th>Number of Clicks</th>
@@ -102,6 +103,7 @@ if (isset($_GET['code'])) {
 
                 foreach ($urls as $url) {
                     echo "<tr>";
+                    echo "<td>{$url['id']}</td>";
                     echo "<td>{$url['original_url']}</td>";
                     echo "<td>{$_SERVER['HTTP_HOST']}/?code={$url['short_code']}</td>";
                     echo "<td>{$url['clicks']}</td>";
@@ -137,7 +139,9 @@ if (isset($_GET['code'])) {
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script>
-        new DataTable('#url-table');
+        new DataTable('#url-table', {
+            order: [[0, 'desc']]
+        });
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
 </body>
