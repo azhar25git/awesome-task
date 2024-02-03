@@ -20,7 +20,7 @@ if (isset($_POST['url'])) {
 
             $_SESSION['formId'] = $_POST['formId'];
         } else {
-            header('Location: ' . $_SERVER['HTTP_HOST']);
+            header('Location: /');
         }
     }
 }
