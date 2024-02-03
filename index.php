@@ -86,11 +86,10 @@ if (isset($_GET['code'])) {
 
     </section>
     <section class="col-10 mx-auto">
-
+        <h4>Link Clicks</h4>
         <table id="url-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th class="col-6">Original URL</th>
                     <th>Short URL</th>
                     <th>Number of Clicks</th>
@@ -103,7 +102,6 @@ if (isset($_GET['code'])) {
 
                 foreach ($urls as $url) {
                     echo "<tr>";
-                    echo "<td>{$url['id']}</td>";
                     echo "<td>{$url['original_url']}</td>";
                     echo "<td>{$_SERVER['HTTP_HOST']}/?code={$url['short_code']}</td>";
                     echo "<td>{$url['clicks']}</td>";

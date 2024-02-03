@@ -3,9 +3,9 @@
 class Database
 {
     private static $instance;
+    public static $env;
 
     public PDO $db;
-    public static $env;
 
     public function __construct()
     {
@@ -15,8 +15,12 @@ class Database
 
     public static function getInstance(): PDO {
         if (!self::$instance) {
-            self::$env = parse_ini_file('.env');
-            self::$instance = new PDO("mysql:host=". self::$env['DBHOST'] . ";dbname=" . self::$env['DBNAME'], self::$env['DBUSER'], self::$env['DBPASS']);
+            self::$env = parse_ini_file('.env'); // we can use DotEnv package here
+            self::$instance = new PDO(
+                "mysql:host=". self::$env['DBHOST'] . ";dbname=" . self::$env['DBNAME'],
+                self::$env['DBUSER'],
+                self::$env['DBPASS']
+            );
         }
         return self::$instance;
     }
@@ -52,7 +56,7 @@ class Database
     // Function to get the original URL for a short code
     public function getOriginalUrl(string $shortCode)
     {
-        $stmt = $this->db->prepare("SELECT id, original_url FROM campaign_urls WHERE short_code = ?");
+        $stmt = $this->db->prepare("SELECT original_url FROM campaign_urls WHERE short_code = ?");
         $stmt->execute([$shortCode]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
